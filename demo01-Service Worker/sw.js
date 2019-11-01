@@ -2,6 +2,7 @@
 var CACHE_NAME = 'sw-cache';
 var CACHE_URLS = ['./index.html', './index.js', './public/equal.png', './public/icon.png'];
 self.addEventListener('install', e => {
+    self.skipWaiting();  /* 跳过等待状态并尽快替代旧的SW进入活动状态 */
     e.waitUntil(
         caches.open(CACHE_NAME)		// 打开缓存
         .then(cache => cache.addAll(CACHE_URLS))
