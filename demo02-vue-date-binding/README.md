@@ -4,7 +4,7 @@
 
 ---
 
-根据自己的理解重新编写~
+根据自己的理解重新编写, 代码见test.js
 
 Practice makes perfect.
 
