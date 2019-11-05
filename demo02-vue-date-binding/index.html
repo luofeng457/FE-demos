@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Data-binding</title>
+</head>
+<body>
+    <script>
+        window.onerror = function (msg, source, ln, cn, error) {
+            console.log('error source: ', source);
+            console.log('error line number: ', ln);
+        }    
+    </script>
+    <input type="text" val={inputVal} onChange="handleChange(e)">
+    <p class="show"></p>
+    <div class="text"></div>
+    <script src="./copy.js"></script>
+</body>
+</html>
