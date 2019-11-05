@@ -79,7 +79,7 @@ class Watcher {
 
 var data = { name: 'fn', gender: 'male' };
 observe(data);
-new Watcher(data, 'gender', update2);
+new Watcher(data, 'gende', update2);
 new Watcher(data, 'name', update);
 data.name = 'dangerous';
 data.gender = 'female';
