@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TodoList from '../components/TodoList';
 import store from '../stores/index';
-import { changeInputAction, addItemAction, removeItemAction, getListAction } from '../actions/index';
+import { changeInputAction, addItemAction, removeItemAction, getMyListAction } from '../actions/index';
 import './App.css'
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
         store.subscribe(this.updateUI);
     }
     componentDidMount() {
-        store.dispatch(getListAction())
+        store.dispatch(getMyListAction())
     }
     handleChange(e) {
         store.dispatch(changeInputAction(e.target.value))
