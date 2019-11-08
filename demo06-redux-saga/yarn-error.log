@@ -1,0 +1,46 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\fengning\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react react-dom react-scirpts antd redux redux-saga
+
+PATH: 
+  C:\Users\fengning\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\fengning\bin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\nodejs;.;C:\Program Files\nodejs;C:\Users\fengning\AppData\Local\Microsoft\WindowsApps;D:\software\Microsoft VS Code\bin;C:\Users\fengning\AppData\Roaming\npm;D:\software\Fiddler;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.19.1
+
+Node version: 
+  10.16.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/react-scirpts: Not found
+      at Request.params.callback [as _callback] (C:\Users\fengning\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66926:18)
+      at Request.self.callback (C:\Users\fengning\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140564:22)
+      at Request.emit (events.js:198:13)
+      at Request.<anonymous> (C:\Users\fengning\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141536:10)
+      at Request.emit (events.js:198:13)
+      at IncomingMessage.<anonymous> (C:\Users\fengning\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141458:12)
+      at Object.onceWrapper (events.js:286:20)
+      at IncomingMessage.emit (events.js:203:15)
+      at endReadableNT (_stream_readable.js:1145:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
+
+npm manifest: 
+  {
+    "name": "demo06-redux-saga",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
