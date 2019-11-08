@@ -17,6 +17,8 @@
        
        
    3. 代码示例
+   
+   `redux-thunk`
    ```js
    // action creator
    export const getListAction = data => ({
@@ -40,6 +42,7 @@
        }
    }
    ```
+   
    
    `redux-saga`
    ```js
