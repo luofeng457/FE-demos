@@ -1,6 +1,6 @@
-Redux
+## Redux
 
-## 优点
+### 优点
 1. 状态持久化：
 2. 状态可回溯：每个新状态是基于原状态创建的而不是直接修改原状态；
 3. FP：reducer使用纯函数；
@@ -9,7 +9,7 @@ Redux
   Link: https://redux.js.org/advanced/middleware
   
   
-## 缺点
+### 缺点
 1. 代码结构繁重
 2. 广播式的发布订阅：每次dipatch一个action时需要遍历reducers去重新获取新状态；
 3. 单一store维护：项目较大时，单个store的频繁修改会让页面交互卡顿；
