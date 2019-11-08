@@ -20,6 +20,7 @@ export default (state=initialState, action) => {
             break;
         case REMOVE_ITEM:
             newState.list.splice(action.index, 1);
+            break;
         default:
             break;
     }

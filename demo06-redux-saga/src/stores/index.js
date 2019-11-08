@@ -6,7 +6,7 @@ import mySaga from './sagas';
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__({}) : compose;
-const enhancer = compose(applyMiddleware(sagaMiddleware));
+const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
 
 const store = createStore(
     reducer,
