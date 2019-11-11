@@ -14,3 +14,25 @@
 2. 广播式的发布订阅：每次dipatch一个action时需要遍历reducers去重新获取新状态；
 3. 单一store维护：项目较大时，单个store的频繁修改会让页面交互卡顿；
 4. 不支持TypeScript;
+
+
+### middleware
+`Redux Middleware`作用于`action`和`reducer`之间，由于`createStore()`创建的`store`本身只支持同步数据流，因此通过引入`middleware`来处理其中的异步数据流。通常，可以通过`Redux Middleware`进行异步数据获取、路由、日志记录等；
+
+```js
+// a simple middleware realization mocker
+const logger = store => next => action => {   // next是一个dispatch函数
+  console.log('dispatching ation: ', action);
+  let result = next(action);                  // 调用applyMiddleware中传入的重写的store.dispatch
+  console.log('new state: ', result);
+  return result;                              // 返回dispatch供链式调用
+}
+
+// applyMiddleware
+const applyMiddleware = (store, middlewares) => {
+  middlewares = middleware.slice();
+  middlewares.reverse();
+  let dispatch = store.dispatch;
+  middlewares.forEach(middleware => (dispatch = middleware(store)(dispatch)));  // 为每个中间件重写store.dispatch
+}
+```
