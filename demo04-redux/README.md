@@ -19,6 +19,13 @@
 ### middleware
 `Redux Middleware`作用于`action`和`reducer`之间，由于`createStore()`创建的`store`本身只支持同步数据流，因此通过引入`middleware`来处理其中的异步数据流。通常，可以通过`Redux Middleware`进行异步数据获取、路由、日志记录等；
 
+`Redux Middleware`中间件需要满足的特点：
+1. 可以直接通过调用而不是每次引入一个外部封装函数（需要重新dispatch）；
+2. 可以支持多个`middleware`的链式调用；
+
+以下是一个中间件及`applyMiddleware`的模拟实现：
+
+
 ```js
 // a simple middleware realization mocker
 const logger = store => next => action => {   // next是一个dispatch函数
