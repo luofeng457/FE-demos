@@ -9,7 +9,7 @@
 用于获取到异步数据流后的页面更新；
 
 4. redux-thunk与redux-saga的区别在于：
-   1. 使用`redux-thunk`你只需要在`actions/index.js`中定义需要中间件进行异步数据处理的两个`action`，然后在一个`action`中异步逻辑完成后`dipatch`另一个`action`用于`reducer`中的状态更新；
+   1. `redux-thunk`的优点是其结果可以再次`dispatch`。使用`redux-thunk`你只需要在`actions/index.js`中定义需要中间件进行异步数据处理的两个`action`，然后在一个`action`中异步逻辑完成后`dipatch`另一个`action`用于`reducer`中的状态更新；
    而使用`redux-saga`时，你不仅要定义两个`action`，你还需要自己手动设置需要监听的`action`、对应的异步数据处理逻辑，最后手动`dispatch`另一个`action`。
    因此，代码结构来说`redux-thunk`比`redux-saga`更加简洁
    2. `redux-thunk`的异步处理逻辑全部放在了actions中，并不符合`redux`定义的action的结构：`action types + action creators`;
