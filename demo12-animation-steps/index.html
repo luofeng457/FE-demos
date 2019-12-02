@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		.collapse {
+			width: 661px;
+			height: 20px;
+			background-image: url('./assets/sprites.png');
+			background-size: cover;
+			background-repeat: no-repeat;
+			animation: mymove 5s infinite steps(3, start);
+		}
+
+		@keyframes mymove {
+			to {
+				background-position-x: -1983px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="collapse"></div>
+</body>
+
+</html>

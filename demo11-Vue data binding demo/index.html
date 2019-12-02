@@ -60,7 +60,7 @@
 			}
 			// 添加订阅者
 			addSub(sub) {
-				// sub 是watcher的实例, 每次解析到模板中的属性时，就通过watcher为属性添加订阅并更新视图；
+				// 订阅者sub 是watcher的实例, 每次解析到模板中的属性时，就通过watcher为属性添加订阅并更新视图；
 				this.subs.push(sub);
 			}
 			// 通知变化
