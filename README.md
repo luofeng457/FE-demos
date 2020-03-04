@@ -2,4 +2,4 @@
 Just demos for Frontend with edging knowledge.
 
 
-### 添加demo16 —— ES7装饰器特性
+### 添加demo16 —— react + mobx开发demo
