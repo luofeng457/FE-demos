@@ -1,4 +1,5 @@
-import { action, observable, computed } from 'mobx';
+import { action, observable, computed, decorate } from 'mobx';
+
 
 class Store {
     
@@ -14,4 +15,24 @@ class Store {
     }
 }
 
-export default Store;
+class Store2 {
+    
+    num = 0;
+
+    get retNum() {
+        return `the value of num is ${this.num}`
+    } 
+
+    increment() {
+        this.num++;
+    }
+
+}
+
+decorate(Store2, {
+    num: observable,
+    retNum: computed,
+    increment: action.bound
+})
+
+export default Store2;
