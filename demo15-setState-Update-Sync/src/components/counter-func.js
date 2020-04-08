@@ -10,7 +10,7 @@ class counter extends React.Component {
     
     handleClick() {
         this.setState((prevState, props) => ({
-            count: this.state.count + 1 
+            count: prevState.count + 1 
         }))
         console.log('count: ', this.state.count)
     }
