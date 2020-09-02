@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            color: #CCCCCC;
+        }
+
+        canvas {
+            border: 1px solid rgba(255, 255, 255, .4);
+        }
+
+        .wrapper {
+            /* background-image: url('../../sky.jpg'); */
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+        }
+
+        video {
+            mix-blend-mode: screen;
+        }
+
+        div {
+            float: left;
+            border: 1px solid #444444;
+            padding: 10px;
+            margin: 10px;
+            background: #3B3B3B;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <video id="video" loop src="../assets/compressed.mp4" controls="true" />
+    </div>
+    <canvas id="output" width="480" height="244"></canvas>
+    <canvas id="buffer" width="480" height="488"></canvas>
+    <script type="text/javascript">
+        // 参考https://github.com/m90/seeThru http://xrd.design/?p=173
+        let processor = {
+            timerCallback: function () {
+                if (this.video.paused || this.video.ended) {
+                    return;
+                }
+                this.computeFrame();
+                let self = this;
+                setTimeout(function () {
+                    self.timerCallback();
+                }, 0);
+            },
+
+            doLoad: function () {
+                this.video = document.getElementById("video");
+                this.outputCanvas = document.getElementById("output");
+                this.output = this.outputCanvas.getContext("2d");
+                this.bufferCanvas = document.getElementById("buffer");
+                this.buffer = this.bufferCanvas.getContext("2d");
+                this.width = this.outputCanvas.width;
+                this.height = this.outputCanvas.height;
+                this.video.addEventListener("play", () => {
+                    this.timerCallback();
+                }, false);
+            },
+
+            computeFrame: function () {
+                this.buffer.drawImage(this.video, 0, 0);
+                let image = this.buffer.getImageData(0, 0, this.width, this.height),
+                    imageData = image.data,
+                    alphaData = this.buffer.getImageData(0, this.height, this.width, this.height).data;
+
+                for (let i = 3, len = imageData.length; i < len; i = i + 4) {
+                    imageData[i] = alphaData[i - 1];
+                }
+                this.output.putImageData(image, 0, 0, 0, 0, this.width, this.height);
+                return;
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            processor.doLoad();
+        });
+
+    </script>
+</body>
+
+</html>
