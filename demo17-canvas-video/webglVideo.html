@@ -153,7 +153,7 @@
             gl.program = program;
             initVertexBuffers(gl, vertices);
             let copyVideo = false;
-            const video = setupVideo('./compressed.mp4');
+            const video = setupVideo('./assets/compressed.mp4');
             const texture = handleTextureMap(gl, video);
             const render = () => {
                 updateTexture(gl, texture, video);
