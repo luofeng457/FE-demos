@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="480" height="488">
+        Please use a browser that supports "canvas"
+    </canvas>
+    <script>
+        const getShaderSources = () => {
+            const vertexShader = `
+                attribute vec4 a_Position;
+                attribute vec2 a_TexCoord;
+                varying vec2 v_TexCoord;
+
+                void main() {
+                    gl_Position = a_Position;
+                    v_TexCoord = a_TexCoord;
+                }
+            `;
+            
+            // texture2D是内置函数，使用取样器u_Sampler在v_TexCoord获取对应位置的颜色信息
+            const fragmentShader = `
+                precision mediump float;
+                varying vec2 v_TexCoord;
+                uniform sampler2D u_Sampler; // 取样器
+
+                void main() {
+                    gl_FragColor = texture2D(u_Sampler, v_TexCoord);
+                }
+            `;
+
+            return [ vertexShader, fragmentShader ];
+        }
+
+        const createShader = (gl, type, source) => {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            return shader;
+        }
+
+        const createProgram = (gl, vertexSHaderSource, fragmentShaderSource) => {
+            const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexSHaderSource);
+            const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+
+            gl.linkProgram(program);
+
+            return program;
+        }
+
+        const initProgram = (gl) => {
+            const [ vertexShader, fragmentShader ] = getShaderSources();
+            const program = createProgram(gl, vertexShader, fragmentShader);
+
+            gl.useProgram(program);
+
+            return program;
+        }
+
+        const drawTexture = (gl) => {
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        }
+
+        const handleTextureMap = (gl, video) => {
+            const texture = gl.createTexture();
+            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); // 翻转Y轴
+            gl.activeTexture(gl.TEXTURE0); // 激活纹理
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); // 设置纹理参数
+            const pixel = new Uint8Array([0, 0, 255, 255]);  // opaque blue
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 1, 0.5, 0, gl.RGB, gl.UNSIGNED_BYTE, pixel); // 把已加载的图形数据写到纹理
+            // 如果需要支持非2的幂的话， 以下三个需要同时添加
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            var u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
+            gl.uniform1i(u_Sampler, 0); // 指定uniform变量的值
+
+            return texture;
+
+        }
+
+        const initVertexBuffers = (gl, vertices) => {
+            const vertexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+            // 强类型数组中每个元素所占用的字节数，这里的强类型数组类型是Float32Array
+            // 所以每个元素的byte数= 32/8 = 4
+            var FSIZE = vertices.BYTES_PER_ELEMENT;
+            console.log('info: ', vertices)
+
+            // 以字节为单位的连续顶点属性开始之间的偏移量，即数组中的一行长度
+            //（行中包含了wegbl几何坐标系及纹理坐标系，这里stride指的是两个几何坐标系或两个纹理坐标系的间隔字节数
+            var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+            gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 4 * FSIZE, 0);
+            gl.enableVertexAttribArray(a_Position);
+
+            var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+            gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, 4 * FSIZE, 2 * FSIZE);
+            gl.enableVertexAttribArray(a_TexCoord);
+        }
+
+        const setupVideo = (url) => {
+            const video = document.createElement('video');
+            let playing = false;
+            let timeupdate = false;
+
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+
+            video.addEventListener('play', () => {
+                playing = true;
+                checkReady();
+            }, true);
+
+            video.addEventListener('timeupdate', () => {
+                timeupdate = true;
+                checkReady();
+            }, true);
+
+            const checkReady = () => {
+                if (playing && timeupdate) {
+                    copyVideo = true;
+                }
+            }
+
+            video.src = url;
+            video.play();
+
+            return video;
+        }
+
+        const updateTexture = (gl, texture, video) => {
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); // 设置纹理参数
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video); // 把已加载的图形数据写到纹理
+        }
+
+        const init = (vertices) => {
+            const canvas = document.getElementById('canvas');
+            const gl = canvas.getContext('webgl');
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            const program = initProgram(gl);
+            gl.program = program;
+            initVertexBuffers(gl, vertices);
+            let copyVideo = false;
+            const video = setupVideo('./compressed.mp4');
+            const texture = handleTextureMap(gl, video);
+            const render = () => {
+                updateTexture(gl, texture, video);
+                drawTexture(gl);
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+
+        const vertices = new Float32Array([
+            -1, 1, 0.0, 1.0,
+            -1, -1, 0.0, 0.0,
+            1, 1, 1.0, 1.0,
+            1, -1, 1.0, 0.0
+        ]);
+
+        init(vertices);
+
+    </script>
+</body>
+</html>
