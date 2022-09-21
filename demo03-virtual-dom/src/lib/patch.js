@@ -35,7 +35,7 @@ const doPatch = (node, patches) => {
             case 'REPLACE':
                 let newNode = patch.payload;
                 newNode = (newNode instanceof Element) ? render(newNode) : document.createTextNode(newNode);
-                node.parentNode.replaceChild(newNode);
+                node.parentNode.replaceChild(newNode, node);
                 break;
             case 'ATTR':
                 for (let key in patch.payload) {

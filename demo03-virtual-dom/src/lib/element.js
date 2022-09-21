@@ -20,6 +20,8 @@ const render = domObj => {
         el.appendChild(child);
     })
 
+    console.log('render: ', el)
+
     return el;
 }
 

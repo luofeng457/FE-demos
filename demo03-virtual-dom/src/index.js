@@ -10,7 +10,7 @@ let v_dom = createElement('ul', {className: 'list', style: "color: green", value
 ])
 let v_dom_2 = createElement('ul', {style: "color: green", value: 123}, [
     createElement('li', {className: 'important'}, ['react']),
-    createElement('li', {style: "color: red"}, ['Angular']),
+    createElement('div', {style: "color: orange"}, ['Angular']),
 ])
 
 let el = render(v_dom);
