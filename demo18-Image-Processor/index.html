@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image processer</title>
+</head>
+
+<body>
+    <img src="../assets/original.jpg" alt="" id="img">
+    <canvas id="canvas"></canvas>
+    <script>
+        const sourceImg = document.getElementById('img');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        sourceImg.onload = () => {
+            createImageBitmap(sourceImg, 100, 100, 200, 200, { imageOrientation: 'flipY', premultiplyAlpha: 'premultiply' })
+                .then((sprites) => {
+                    console.log('sprites: ', sprites);
+                    ctx.drawImage(sprites, 50, 50, sprites.width, sprites.height);
+                });
+        }
+    </script>
+</body>
+
+</html>

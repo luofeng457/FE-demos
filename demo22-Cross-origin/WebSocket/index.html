@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="hook"></div>
+    <script>
+        SocketEvent = () => {
+
+            if (window.WebSocket) {
+                console.log('llll')
+                var socket = new WebSocket('ws://localhost:5555');
+
+                socket.onopen = function () {
+                    console.log('client socket opening...');
+                    socket.send(`I'm requesting some data from you...`);
+                }
+                socket.onmessage = function (e) {
+                    console.log('on message', e);
+                    console.log('on message data', e.data);
+                }
+                socket.onclose = function (e) {
+                    console.log('client socket closing...');
+                }
+            }
+        }
+    </script>
+    <button onclick="SocketEvent()">socket</button>
+</body>
+
+</html>

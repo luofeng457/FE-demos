@@ -1,0 +1,14 @@
+{
+  "name": "demo22-cross-origin",
+  "version": "1.0.0",
+  "description": "solutions for cross-origin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.8.1"
+  }
+}
