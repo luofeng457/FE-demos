@@ -8,7 +8,6 @@ const http = require('http');
 //组件
 
 
-
 //服务
 http.createServer((req, res) => {
     res.writeHead(200, {

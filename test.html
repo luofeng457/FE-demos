@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" id="fileUploader" multiple accept="image">
+
+    <div id="content" ondrop="drop(event)" ondragover="allowDrop(event);" />
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+        function drop(ev) {
+            ev.preventDefault();
+            const files = ev.dataTransfer.files;
+            console.log(files); // [{{name: "1.jpg",lastModified: 1594369580771...},{name:'2.jpg',lastModified: 1596012406708...}]
+            console.log(files instanceof FileList); // true
+        }
+    </script>
+    <style type="text/css">
+        #content {
+            width: 500px;
+            height: 500px;
+            border: 1px solid brown;
+        }
+    </style>
+    <script>
+        const el = document.getElementById('fileUploader');
+        el.onchange = (e) => {
+            const files = e.target.files;
+            console.log({ files }, files[0])
+        }
+    </script>
+</body>
+
+</html>
